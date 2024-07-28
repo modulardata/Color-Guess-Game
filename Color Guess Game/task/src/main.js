@@ -45,51 +45,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	// restart function to restart the game.
 	const restartGame = () => {
-    colorsInColorBox.length = 0;
+		colorsInColorBox.length = 0;
 		generateColorSet(colorBox, 6);
 		choseRandomColorInColorBox();
 		statusMessage.innerText = 'Start Guessing!';
+		document.querySelectorAll('.color-block').forEach((block) => {
+			block.style.display = '';
+		});
 	}
 
- // generateColorSet(colorBox, 6);
-	// // Restarts the game when the restart button is clicked.
-	// restartButton.addEventListener('click', restartGame);
-	//
-	// console.log(colorsInColorBox);
+	// Check if the clicked box is a color block and if it's the correct color.
+ const isBoxCorrect = (event) => {
+		if (event.target.classList.contains('color-block')) {
+			const clickedColor = event.target.style.backgroundColor;
+			if (clickedColor === rgbGuessColor.innerText.toLowerCase()) {
+				statusMessage.innerText = 'Correct!';
+				// Optionally, set all color blocks to display the correct color
+				document.querySelectorAll('.color-block').forEach((block) => {
+					block.style.backgroundColor = clickedColor;
+				});
+			} else {
+				statusMessage.innerText = 'Try Again!';
+				// Hide the clicked block
+				event.target.style.display = 'none';
+			}
+		}
+ };
 
-	    // Handle click event on a color block
+	//  Start or restart in invoked after the game when the DOM is fully loaded.
+	restartGame();
+	// Handle click event's
+	colorBoxContainer.addEventListener('click' , isBoxCorrect);
+	restartButton.addEventListener('click', restartGame);
 
-    colorBoxContainer.addEventListener('click', (event) => {
-        if (event.target.classList.contains('color-block')) {
-            const clickedColor = event.target.style.backgroundColor;
-            if (clickedColor === rgbGuessColor.innerText.toLowerCase()) {
-                statusMessage.innerText = 'Correct!';
-                // Optionally, set all color blocks to display the correct color
-                document.querySelectorAll('.color-block').forEach((block) => {
-                    block.style.backgroundColor = clickedColor;
-                });
-            } else {
-                statusMessage.innerText = 'Try Again!';
-                // Hide the clicked block
-                event.target.style.display = 'none';
-            }
-        }
-    });
 
-    // Restart the game when clicked on the restart button
-    restartButton.addEventListener('click', () => {
-        // Reset the status message
-        statusMessage.innerText = 'Start Guessing!';
-        // Show all color blocks
-        document.querySelectorAll('.color-block').forEach((block) => {
-            block.style.display = '';
-        });
-        // Start a new game
-        restartGame();
-    });
-
-	  restartGame();
-});
+}); // End of DOMContentLoaded event listener
 
 
 
