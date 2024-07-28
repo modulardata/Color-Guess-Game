@@ -1,17 +1,34 @@
 /* style.css */
 body {
- background: black;
- color: white;
+ background: #efefef;
+ color: #282a2a;
+ font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+ /*text-align: center;*/
 }
+
+main {
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ gap: 1rem;
+}
+
 
 .color-block {
  display: inline-block;
- margin: 10px;
- border-radius: 5px;
+ margin: 1.5rem;
+ border-radius: 10px;
  cursor: pointer;
- padding: 20px;
+ padding: 40px;
 }
 
 .color-block:hover {
  transform: scale(1.1);
+}
+
+#restart {
+ padding: 15px 30px;
+ border-radius: 5px;
+ cursor: pointer;
+ background-color: cornflowerblue;
 }

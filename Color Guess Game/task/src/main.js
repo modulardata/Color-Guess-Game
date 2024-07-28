@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 	// Check if the clicked box is a color block and if it's the correct color.
- const isBoxCorrect = (event) => {
+	const isBoxCorrect = (event) => {
 		if (event.target.classList.contains('color-block')) {
 			const clickedColor = event.target.style.backgroundColor;
 			if (clickedColor === rgbGuessColor.innerText.toLowerCase()) {
@@ -70,12 +70,12 @@ document.addEventListener('DOMContentLoaded', () => {
 				event.target.style.display = 'none';
 			}
 		}
- };
+	};
 
 	//  Start or restart in invoked after the game when the DOM is fully loaded.
 	restartGame();
 	// Handle click event's
-	colorBoxContainer.addEventListener('click' , isBoxCorrect);
+	colorBoxContainer.addEventListener('click', isBoxCorrect);
 	restartButton.addEventListener('click', restartGame);
 
 

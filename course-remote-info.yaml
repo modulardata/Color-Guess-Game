@@ -16,7 +16,7 @@ stages:
     is_completed: true
   - id: 2616
     step: 45554
-    is_completed: false
+    is_completed: true
 topics:
   0:
     - title: Introduction to UI/UX
