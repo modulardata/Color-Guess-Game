@@ -1,5 +1,10 @@
 type: choice
-is_multiple_choice: false
+is_multiple_choice: true
+options:
+  - text: date.getFull()
+  - text: date.getMonth()
+  - text: date.getData()
+  - text: date.getHours()
 files:
   - name: main.js
     visible: true

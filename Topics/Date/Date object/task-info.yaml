@@ -1,5 +1,12 @@
 type: choice
-is_multiple_choice: false
+is_multiple_choice: true
+options:
+  - text: "With no arguments in the <code>Date()</code> constructor, the <code>date</code>\
+    \ variable will contain the current date and time."
+  - text: The <code>new</code> keyword is optional.
+  - text: The Date() constructor can take one argument at most.
+  - text: "With no arguments in the <code>Date()</code> constructor, the <code>date</code>\
+    \ variable will contain the 01.01.1970 date."
 files:
   - name: main.js
     visible: true

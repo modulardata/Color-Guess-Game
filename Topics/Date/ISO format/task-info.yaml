@@ -1,5 +1,10 @@
 type: choice
 is_multiple_choice: false
+options:
+  - text: let date = new Date("2022-01-23")
+  - text: let date = new Date("01/20/2022")
+  - text: let date = new Date("2022-23-01")
+  - text: let date = new Date("25/11/2022")
 files:
   - name: main.js
     visible: true

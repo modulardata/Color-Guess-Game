@@ -126,6 +126,118 @@ class Test extends StageTest {
         if (!rgbColor) return wrong(this.missingIdMsg("#rgb-color"));
 
         const rgbColorText = rgbColor.innerText.toLowerCase();
+        this.correctColor = rgbColorText;
+        if (!rgbColorText.startsWith("rgb(") || !rgbColorText.endsWith(")")) {
+            return wrong(`The text of the element with the selector of "#rgb-color" should be in the format of "RGB(0, 0, 0)".`);
+        }
+
+        // check if all color-blocks has different bg-color
+        const colorBlocks = Array.from(document.body.querySelectorAll(".color-block"));
+        const bgColors = colorBlocks.map(block => getComputedStyle(block)["backgroundColor"]);
+
+        for (let i = 1; i <= colorBlocks.length; i++) {
+            let colorBlock = `.color-block:nth-of-type(${i})`;
+            const colorBlockElement = document.body.querySelector(colorBlock);
+            if (!colorBlockElement) return wrong(this.missingIdMsg(colorBlock));
+
+            // check if color blocks are not the same from stage1
+            if (!this.elementStyle(colorBlock, "backgroundColor", this.bgColors[i - 1])) {
+                return wrong(`The color-block with the selector of "${colorBlock}" should not have the same background color from Stage 1.`);
+            }
+
+            const colorBlockBg = getComputedStyle(colorBlockElement)["backgroundColor"];
+            const duplicates = bgColors.filter(bgColor => bgColor === colorBlockBg).length;
+            if (duplicates !== 1) {
+                return wrong(`All color blocks should have different background colors.`);
+            }
+
+        }
+
+        // check if correct color exists
+        const isCorrectColorExist = bgColors.filter(bgColor => bgColor === rgbColorText);
+        if (isCorrectColorExist.length !== 1) {
+            return wrong(`The correct color should be one of the color blocks.`);
+
+        }
+
+        return correct();
+
+    }), this.page.execute(async () => {
+        // test #4
+        // STAGE3 GAME LOGIC FAILURE
+
+        // check if color block click works correctly
+        // click on the wrong color block
+        this.correctColorBlock = null;
+
+        for (let i = 1; i <= 6; i++) {
+            let colorBlock = `.color-block:nth-of-type(${i})`;
+            const colorBlockElement = document.body.querySelector(colorBlock);
+            if (!colorBlockElement) return wrong(this.missingIdMsg(colorBlock));
+
+
+            // check if wrong color block disappears
+            const colorBlockBg = colorBlockElement.style.backgroundColor;
+            if (colorBlockBg !== this.correctColor) {
+                await colorBlockElement.click();
+                if (colorBlockElement.style.display !== "none") {
+                    return wrong(`When the wrong color block is clicked, it should disappear.`);
+                }
+
+                // check if #status text is correct
+                if (this.elementHasText("#status", "Try Again!")) {
+                    return wrong(`When the wrong color block is clicked, the text of the element with the selector of "#status" should be "Try Again!"`);
+                }
+            } else {
+                this.correctColorBlock = colorBlockElement;
+            }
+            await new Promise(resolve => setTimeout(resolve, 1000));
+        }
+        return correct();
+
+    }), this.page.execute(async () => {
+        // test #5
+        // STAGE3 GAME LOGIC SUCCESS
+
+        // check if color block click works correctly
+        // click on the correct color block
+
+        //const correctColorBlock = document.body.querySelector(`.color-block[style="background-color: ${this.correctColor};"]`);
+        const correctColorBlockBg = getComputedStyle(this.correctColorBlock).backgroundColor
+        if (correctColorBlockBg !== this.correctColor) return wrong(`The correct color block should exist.`);
+
+        await this.correctColorBlock.click();
+
+        // check if #status text is correct
+        if (this.elementHasText("#status", "Correct!")) {
+            return wrong(`When the correct color block is clicked, the text of the element with the selector of "#status" should be "Correct!"`);
+        }
+
+        await new Promise(resolve => setTimeout(resolve, 3000));
+
+        return correct();
+
+    }), this.page.execute(async () => {
+        // test #6
+        // STAGE3 GAME RESTART
+
+        // check if restart button works correctly
+        const restartButton = document.body.querySelector("#restart");
+        if (!restartButton) return wrong(this.missingIdMsg("#restart"));
+
+        await restartButton.click();
+
+        // check if #status text is correct
+        if (this.elementHasText("#status", "Start Guessing!")) {
+            return wrong(`When the restart button is clicked, the text of the element with the selector of "#status" should be "Start Guessing!"`);
+        }
+
+        // check if rgb-color has random rgb
+        const rgbColor = document.body.querySelector("#rgb-color");
+        if (!rgbColor) return wrong(this.missingIdMsg("#rgb-color"));
+
+        const rgbColorText = rgbColor.innerText.toLowerCase();
+        this.correctColor = rgbColorText;
         if (!rgbColorText.startsWith("rgb(") || !rgbColorText.endsWith(")")) {
             return wrong(`The text of the element with the selector of "#rgb-color" should be in the format of "RGB(0, 0, 0)".`);
         }
@@ -161,12 +273,14 @@ class Test extends StageTest {
 
         await new Promise(resolve => setTimeout(resolve, 3000));
 
+
         return correct();
-    })
+
+    }),
     ]
 
 }
 
 it("Test stage", async () => {
     await new Test().runTests()
-}).timeout(30000);
+}).timeout(60000);
