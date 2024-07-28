@@ -39,10 +39,8 @@ class Test extends StageTest {
             return styleValue !== value;
         };
 
-
         // CONSTANTS-->
         const theElement = "The element with the selector of";
-
         this.bgColors = [
             "rgb(255, 0, 0)", "rgb(255, 255, 0)", "rgb(0, 255, 0)",
             "rgb(0, 255, 255)", "rgb(0, 0, 255)", "rgb(255, 0, 255)",
@@ -81,10 +79,6 @@ class Test extends StageTest {
 
         // check if its p tag
         if (this.elementExists(rgb, ["p"])) return wrong(this.wrongTagMsg(rgb, "p"));
-
-        // check if it has text
-        const rgbText = "RGB(255, 0, 0)";
-        if (this.elementHasText(rgb, rgbText)) return wrong(this.wrongTextMsg(rgb, rgbText));
 
         // check if #status exists
         const status = "#status";
@@ -125,19 +119,44 @@ class Test extends StageTest {
 
     }), this.page.execute(async () => {
         // test #3
-        // STAGE1 COLOR BLOCKS
+        // STAGE2 COLOR BLOCKS
 
-        // check if all color-blocks has correct bg-color
-        let numBlocks = 6;
-        for (let i = 1; i <= numBlocks; i++) {
+        // check rgb-color has random rgb
+        const rgbColor = document.body.querySelector("#rgb-color");
+        if (!rgbColor) return wrong(this.missingIdMsg("#rgb-color"));
+
+        const rgbColorText = rgbColor.innerText.toLowerCase();
+        if (!rgbColorText.startsWith("rgb(") || !rgbColorText.endsWith(")")) {
+            return wrong(`The text of the element with the selector of "#rgb-color" should be in the format of "RGB(0, 0, 0)".`);
+        }
+
+        // check if all color-blocks has different bg-color
+        const colorBlocks = Array.from(document.body.querySelectorAll(".color-block"));
+        const bgColors = colorBlocks.map(block => getComputedStyle(block)["backgroundColor"]);
+
+        for (let i = 1; i <= colorBlocks.length; i++) {
             let colorBlock = `.color-block:nth-of-type(${i})`;
-
             const colorBlockElement = document.body.querySelector(colorBlock);
             if (!colorBlockElement) return wrong(this.missingIdMsg(colorBlock));
 
-            if (this.elementStyle(colorBlock, "backgroundColor", this.bgColors[i - 1])) {
-                return wrong(`The color-block with the selector of "${colorBlock}" should have the background color of ${this.bgColors[i - 1]}.`);
+            // check if color blocks are not the same from stage1
+            if (!this.elementStyle(colorBlock, "backgroundColor", this.bgColors[i - 1])) {
+                return wrong(`The color-block with the selector of "${colorBlock}" should not have the same background color from Stage 1.`);
             }
+
+            const colorBlockBg = getComputedStyle(colorBlockElement)["backgroundColor"];
+            const duplicates = bgColors.filter(bgColor => bgColor === colorBlockBg).length;
+            if (duplicates !== 1) {
+                return wrong(`All color blocks should have different background colors.`);
+            }
+
+        }
+
+        // check if correct color exists
+        const isCorrectColorExist = bgColors.filter(bgColor => bgColor === rgbColorText);
+        if (isCorrectColorExist.length !== 1) {
+            return wrong(`The correct color should be one of the color blocks.`);
+
         }
 
         await new Promise(resolve => setTimeout(resolve, 3000));

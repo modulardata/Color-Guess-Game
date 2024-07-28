@@ -3,14 +3,14 @@ hyperskill_project:
   ide_files: https://cogniterra.org/media/attachments/lesson/38341/additional_files.json
   is_template_based: false
   use_ide: true
-update_date: "Sat, 20 Apr 2024 20:39:30 UTC"
+update_date: "Sun, 28 Jul 2024 05:33:30 UTC"
 stages:
   - id: 2613
     step: 45551
     is_completed: true
   - id: 2614
     step: 45552
-    is_completed: false
+    is_completed: true
   - id: 2615
     step: 45553
     is_completed: false
@@ -35,18 +35,16 @@ topics:
       theory_id: 7678
     - title: HTML attributes id and class
       theory_id: 7527
+    - title: Intro to HTML forms
+      theory_id: 6560
     - title: Connecting CSS to HTML
       theory_id: 7418
     - title: Basic syntax
       theory_id: 7722
-    - title: Intro to HTML forms
-      theory_id: 6560
     - title: Comments
       theory_id: 7730
     - title: Buttons
       theory_id: 28053
-    - title: HTML basics
-      theory_id: 6434
     - title: Tags and Attributes
       theory_id: 7536
     - title: HTML page structure
@@ -62,10 +60,10 @@ topics:
   1:
     - title: Comments
       theory_id: 8170
-    - title: CSS Selectors
-      theory_id: 7738
     - title: DOM
       theory_id: 8635
+    - title: CSS Selectors
+      theory_id: 7738
     - title: Connecting JavaScript to HTML
       theory_id: 7510
     - title: Introduction to JavaScript
@@ -82,6 +80,8 @@ topics:
       theory_id: 8372
     - title: Functions
       theory_id: 8388
+    - title: Introduction to Objects
+      theory_id: 8588
     - title: Defining functions
       theory_id: 24012
     - title: Anonymous function
@@ -90,22 +90,20 @@ topics:
       theory_id: 8455
     - title: Array
       theory_id: 16141
-    - title: Introduction to Objects
-      theory_id: 8588
-    - title: "Random: getting and generating"
-      theory_id: 18841
     - title: DOM methods
       theory_id: 8662
     - title: Modifying DOM
       theory_id: 21549
+    - title: "Random: getting and generating"
+      theory_id: 18841
   2:
     - title: Array creation
       theory_id: 16356
     - title: Object methods and keyword "this"
       theory_id: 8715
-    - title: ForEach method
-      theory_id: 10133
     - title: Intro to DOM events
       theory_id: 10857
+    - title: ForEach method
+      theory_id: 10133
     - title: The "addEventListener" method
       theory_id: 8723

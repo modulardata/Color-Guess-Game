@@ -1,0 +1,15 @@
+type: theory
+files:
+  - name: main.js
+    visible: true
+    learner_created: false
+  - name: index.html
+    visible: true
+    learner_created: true
+  - name: style.css
+    visible: true
+    learner_created: true
+feedback_link: https://hyperskill.org/learn/step/23067#comment
+status: Solved
+record: -1
+post_submission_on_open: true
